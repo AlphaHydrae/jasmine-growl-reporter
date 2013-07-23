@@ -6,6 +6,8 @@
 
 Growl notifications when running your Jasmine specs.
 
+See [node-growl](https://github.com/visionmedia/node-growl) for platform-specific support.
+
 ## Meta
 
 * **Author:** Simon Oulevay (Alpha Hydrae)
