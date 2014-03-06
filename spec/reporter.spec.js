@@ -32,7 +32,7 @@ describe("GrowlReporter", function() {
   it("should report 0 results", function() {
     reporter.jasmineStarted();
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('0 passed, 0 total', {
+    expect(growl).toHaveNotified('0 tests', {
       name: title,
       title: passedRegexp
     });
@@ -45,7 +45,7 @@ describe("GrowlReporter", function() {
       reporter.specDone(fakeSpecResult(true));
     });
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('2 passed, 2 total', {
+    expect(growl).toHaveNotified('2 tests, 0 failed', {
       name: title,
       title: passedRegexp
     });
@@ -58,7 +58,7 @@ describe("GrowlReporter", function() {
       reporter.specDone(fakeSpecResult(false));
     });
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('0 passed, 3 failed, 3 total', {
+    expect(growl).toHaveNotified('3 tests, 3 failed', {
       name: title,
       title: failedRegexp
     });
@@ -75,7 +75,7 @@ describe("GrowlReporter", function() {
       reporter.specDone(fakeSpecResult(false));
     });
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('2 passed, 4 failed, 6 total', {
+    expect(growl).toHaveNotified('6 tests, 4 failed', {
       name: title,
       title: failedRegexp
     });
@@ -88,7 +88,7 @@ describe("GrowlReporter", function() {
       reporter.specDone(pendingSpecResult());
     });
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('0 passed, 3 pending, 3 total', {
+    expect(growl).toHaveNotified('3 tests, 0 failed, 3 pending', {
       name: title,
       title: passedRegexp
     });
@@ -105,7 +105,7 @@ describe("GrowlReporter", function() {
       reporter.specDone(pendingSpecResult());
     });
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('1 passed, 2 pending, 3 total', {
+    expect(growl).toHaveNotified('3 tests, 0 failed, 2 pending', {
       name: title,
       title: passedRegexp
     });
@@ -122,7 +122,7 @@ describe("GrowlReporter", function() {
       reporter.specDone(fakeSpecResult(false));
     });
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('0 passed, 4 pending, 5 failed, 9 total', {
+    expect(growl).toHaveNotified('9 tests, 5 failed, 4 pending', {
       name: title,
       title: failedRegexp
     });
@@ -143,7 +143,7 @@ describe("GrowlReporter", function() {
       reporter.specDone(fakeSpecResult(false));
     });
     reporter.jasmineDone();
-    expect(growl).toHaveNotified('2 passed, 3 pending, 4 failed, 9 total', {
+    expect(growl).toHaveNotified('9 tests, 4 failed, 3 pending', {
       name: title,
       title: failedRegexp
     });
