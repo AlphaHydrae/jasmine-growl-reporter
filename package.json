@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "main": "./index.js",
   "scripts": {
-    "test": "jasmine-node spec"
+    "test": "grunt"
   },
   "dependencies": {
     "growl": "~1.7.0"
