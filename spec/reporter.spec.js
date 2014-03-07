@@ -1,150 +1,119 @@
 
-var _ = require('underscore');
+var _ = require('underscore'),
+    RunnerMock = require('./runnerMock'),
+    growlReporterInjector = require('../lib/reporter').inject;
+
 require('./matchers');
 
 describe("GrowlReporter", function() {
 
-  var injector = require('../lib/reporter').inject,
-      growl = null,
-      reporter = null;
-
-  var fakeSpecResult = function(passed) {
-    return {
-      status: passed ? 'passed' : 'failed'
-    };
-  };
-
-  var pendingSpecResult = function() {
-    return {
-      status: 'pending'
-    };
-  };
-
-  var title = 'Jasmine',
+  var expectedTitle = 'Jasmine',
       passedRegexp = /^PASSED in [\d\.]+s$/,
       failedRegexp = /^FAILED in [\d\.]+s$/;
 
+  var growl, reporter, runner;
+
   beforeEach(function() {
     growl = jasmine.createSpy();
-    reporter = new (injector({ growl: growl }))();
+    reporter = new (growlReporterInjector({ growl: growl }))();
+    runner = new RunnerMock(reporter);
   });
 
   it("should report 0 results", function() {
-    reporter.jasmineStarted();
-    reporter.jasmineDone();
+
+    runner.suite(function() {});
+
     expect(growl).toHaveNotified('0 tests', {
-      name: title,
+      name: expectedTitle,
       title: passedRegexp
     });
   });
 
   it("should report 2 successful results", function() {
-    reporter.jasmineStarted();
-    _.times(2, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(true));
+
+    runner.suite(function() {
+      _.times(2, this.passTest, this);
     });
-    reporter.jasmineDone();
+
     expect(growl).toHaveNotified('2 tests, 0 failed', {
-      name: title,
+      name: expectedTitle,
       title: passedRegexp
     });
   });
 
   it("should report 3 failed results", function() {
-    reporter.jasmineStarted();
-    _.times(3, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(false));
+
+    runner.suite(function() {
+      _.times(3, this.failTest, this);
     });
-    reporter.jasmineDone();
+
     expect(growl).toHaveNotified('3 tests, 3 failed', {
-      name: title,
+      name: expectedTitle,
       title: failedRegexp
     });
   });
 
   it("should report 2 passed and 4 failed results", function() {
-    reporter.jasmineStarted();
-    _.times(2, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(true));
+
+    runner.suite(function() {
+      _.times(2, this.passTest, this);
+      _.times(4, this.failTest, this);
     });
-    _.times(4, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(false));
-    });
-    reporter.jasmineDone();
+
     expect(growl).toHaveNotified('6 tests, 4 failed', {
-      name: title,
+      name: expectedTitle,
       title: failedRegexp
     });
   });
 
   it("should report 3 pending results", function() {
-    reporter.jasmineStarted();
-    _.times(3, function() {
-      reporter.specStarted();
-      reporter.specDone(pendingSpecResult());
+
+    runner.suite(function() {
+      _.times(3, this.skipTest, this);
     });
-    reporter.jasmineDone();
+
     expect(growl).toHaveNotified('3 tests, 0 failed, 3 pending', {
-      name: title,
+      name: expectedTitle,
       title: passedRegexp
     });
   });
 
   it("should report 1 passed and 2 pending results", function() {
-    reporter.jasmineStarted();
-    _.times(1, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(true));
+
+    runner.suite(function() {
+      _.times(1, this.passTest, this);
+      _.times(2, this.skipTest, this);
     });
-    _.times(2, function() {
-      reporter.specStarted();
-      reporter.specDone(pendingSpecResult());
-    });
-    reporter.jasmineDone();
+
     expect(growl).toHaveNotified('3 tests, 0 failed, 2 pending', {
-      name: title,
+      name: expectedTitle,
       title: passedRegexp
     });
   });
 
   it("should report 4 pending and 5 failed results", function() {
-    reporter.jasmineStarted();
-    _.times(4, function() {
-      reporter.specStarted();
-      reporter.specDone(pendingSpecResult());
+
+    runner.suite(function() {
+      _.times(4, this.skipTest, this);
+      _.times(5, this.failTest, this);
     });
-    _.times(5, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(false));
-    });
-    reporter.jasmineDone();
+
     expect(growl).toHaveNotified('9 tests, 5 failed, 4 pending', {
-      name: title,
+      name: expectedTitle,
       title: failedRegexp
     });
   });
 
   it("should report 2 passed, 3 pending and 4 failed results", function() {
-    reporter.jasmineStarted();
-    _.times(2, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(true));
+
+    runner.suite(function() {
+      _.times(2, this.passTest, this);
+      _.times(3, this.skipTest, this);
+      _.times(4, this.failTest, this);
     });
-    _.times(3, function() {
-      reporter.specStarted();
-      reporter.specDone(pendingSpecResult());
-    });
-    _.times(4, function() {
-      reporter.specStarted();
-      reporter.specDone(fakeSpecResult(false));
-    });
-    reporter.jasmineDone();
+
     expect(growl).toHaveNotified('9 tests, 4 failed, 3 pending', {
-      name: title,
+      name: expectedTitle,
       title: failedRegexp
     });
   });
