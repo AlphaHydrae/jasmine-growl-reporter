@@ -8,7 +8,14 @@ Growl notifications when running your Jasmine specs.
 
 ![jasmine-growl-reporter](https://raw.github.com/AlphaHydrae/jasmine-growl-reporter/master/res/screenshot.png)
 
-See [node-growl](https://github.com/visionmedia/node-growl) for platform-specific support.
+This reporter is included with [jasmine-node](https://github.com/mhevery/jasmine-node).
+
+See [node-growl](https://github.com/visionmedia/node-growl) for platform-specific installation instructions.
+
+## Compatibility
+
+* `v0.2.0` and higher are compatible with Jasmine 2.0 reporters
+* `v0.0.2` is compatible with Jasmine 1.3 reporters
 
 ## Meta
 
