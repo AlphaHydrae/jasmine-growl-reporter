@@ -8,7 +8,7 @@ Growl notifications when running your Jasmine specs.
 
 ![jasmine-growl-reporter](https://raw.github.com/AlphaHydrae/jasmine-growl-reporter/master/res/screenshot.png)
 
-This reporter is included with [jasmine-node](https://github.com/mhevery/jasmine-node).
+This reporter is included with [jasmine-node](https://github.com/mhevery/jasmine-node) and [grunt-jasmine-node](https://github.com/jasmine-contrib/grunt-jasmine-node).
 
 See [node-growl](https://github.com/visionmedia/node-growl) for platform-specific installation instructions.
 
