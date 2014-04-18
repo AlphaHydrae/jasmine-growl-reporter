@@ -24,7 +24,7 @@ describe("GrowlReporter", function() {
       passedRegexp = /^PASSED in [\d\.]+s$/,
       failedRegexp = /^FAILED in [\d\.]+s$/,
       passedImageRegexp = /^.*passed\.png$/,
-      failedImageRegexp = /^.*failed.*$/;
+      failedImageRegexp = /^.*failed\.png$/;
 
   beforeEach(function() {
     growl = jasmine.createSpy();
