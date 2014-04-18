@@ -22,7 +22,9 @@ describe("GrowlReporter", function() {
 
   var title = 'Jasmine',
       passedRegexp = /^PASSED in [\d\.]+s$/,
-      failedRegexp = /^FAILED in [\d\.]+s$/;
+      failedRegexp = /^FAILED in [\d\.]+s$/,
+      passedImageRegexp = /^.*passed\.png$/,
+      failedImageRegexp = /^.*failed.*$/;
 
   beforeEach(function() {
     growl = jasmine.createSpy();
@@ -34,7 +36,8 @@ describe("GrowlReporter", function() {
     reporter.reportRunnerResults();
     expect(growl).toHaveNotified('0 tests passed, 0 total', {
       name: title,
-      title: passedRegexp
+      title: passedRegexp,
+      image: passedImageRegexp
     });
   });
 
@@ -47,7 +50,8 @@ describe("GrowlReporter", function() {
     reporter.reportRunnerResults();
     expect(growl).toHaveNotified('2 tests passed, 2 total', {
       name: title,
-      title: passedRegexp
+      title: passedRegexp,
+      image: passedImageRegexp
     });
   });
 
@@ -60,7 +64,8 @@ describe("GrowlReporter", function() {
     reporter.reportRunnerResults();
     expect(growl).toHaveNotified('0 tests passed, 3 tests failed, 3 total', {
       name: title,
-      title: failedRegexp
+      title: failedRegexp,
+      image: failedImageRegexp
     });
   });
 
@@ -77,7 +82,8 @@ describe("GrowlReporter", function() {
     reporter.reportRunnerResults();
     expect(growl).toHaveNotified('2 tests passed, 4 tests failed, 6 total', {
       name: title,
-      title: failedRegexp
+      title: failedRegexp,
+      image: failedImageRegexp
     });
   });
 });

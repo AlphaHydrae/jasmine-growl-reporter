@@ -25,7 +25,6 @@ beforeEach(function() {
             optionsMatch = false;
           } else {
             for (var name in options) {
-
               var matcher = options[name],
                   value = actualOptions[name];
               if (!(_.isRegExp(matcher) ? _.isString(value) && value.match(matcher) : value == matcher)) {
