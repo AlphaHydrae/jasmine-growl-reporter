@@ -5,6 +5,7 @@ require('./matchers');
 describe("GrowlReporter", function() {
 
   var injector = require('../lib/reporter').inject,
+      path = require('path'),
       growl = null,
       reporter = null;
 
@@ -23,8 +24,8 @@ describe("GrowlReporter", function() {
   var title = 'Jasmine',
       passedRegexp = /^PASSED in [\d\.]+s$/,
       failedRegexp = /^FAILED in [\d\.]+s$/,
-      passedImageRegexp = /^.*passed\.png$/,
-      failedImageRegexp = /^.*failed\.png$/;
+      passedImage = path.resolve(__dirname, '../res/passed.png'),
+      failedImage = path.resolve(__dirname, '../res/failed.png');
 
   beforeEach(function() {
     growl = jasmine.createSpy();
@@ -37,7 +38,7 @@ describe("GrowlReporter", function() {
     expect(growl).toHaveNotified('0 tests passed, 0 total', {
       name: title,
       title: passedRegexp,
-      image: passedImageRegexp
+      image: passedImage
     });
   });
 
@@ -51,7 +52,7 @@ describe("GrowlReporter", function() {
     expect(growl).toHaveNotified('2 tests passed, 2 total', {
       name: title,
       title: passedRegexp,
-      image: passedImageRegexp
+      image: passedImage
     });
   });
 
@@ -65,7 +66,7 @@ describe("GrowlReporter", function() {
     expect(growl).toHaveNotified('0 tests passed, 3 tests failed, 3 total', {
       name: title,
       title: failedRegexp,
-      image: failedImageRegexp
+      image: failedImage
     });
   });
 
@@ -83,7 +84,7 @@ describe("GrowlReporter", function() {
     expect(growl).toHaveNotified('2 tests passed, 4 tests failed, 6 total', {
       name: title,
       title: failedRegexp,
-      image: failedImageRegexp
+      image: failedImage
     });
   });
 });
