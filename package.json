@@ -6,7 +6,7 @@
     "test": "grunt"
   },
   "dependencies": {
-    "growl": "^1.10.2"
+    "growl": "1.10.0"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
@@ -22,10 +22,5 @@
     "type": "git",
     "url": "https://github.com/AlphaHydrae/jasmine-growl-reporter"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.github.com/AlphaHydrae/jasmine-growl-reporter/master/LICENSE.txt"
-    }
-  ]
+  "license": "MIT"
 }
