@@ -6,7 +6,7 @@
     "test": "grunt"
   },
   "dependencies": {
-    "growl": "1.10.0"
+    "growl": "^1.10.5"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
